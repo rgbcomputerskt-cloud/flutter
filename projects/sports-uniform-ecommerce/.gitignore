@@ -1,0 +1,11 @@
+# user-uploaded media (keep the folder, ignore its contents)
+assets/uploads/*
+!assets/uploads/.gitkeep
+
+# local overrides
+config/config.local.php
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
