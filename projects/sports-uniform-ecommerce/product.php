@@ -8,7 +8,7 @@ if (!$p) { http_response_code(404); $pageTitle = 'Not found'; include __DIR__.'/
 $cat     = $p['category_id'] ? fetch_one('SELECT * FROM categories WHERE id = ?', [$p['category_id']]) : null;
 $gallery = fetch_all('SELECT * FROM product_images WHERE product_id = ? ORDER BY sort_order, id', [$p['id']]);
 $varsRaw = fetch_all('SELECT * FROM product_variations WHERE product_id = ? ORDER BY attribute, sort_order, id', [$p['id']]);
-$related = fetch_all('SELECT * FROM products WHERE is_active = 1 AND category_id = ? AND id <> ? ORDER BY RAND() LIMIT 4', [$p['category_id'], $p['id']]);
+$related = fetch_all('SELECT * FROM products WHERE is_active = 1 AND category_id = ? AND id <> ? ORDER BY ' . sql_rand() . ' LIMIT 4', [$p['category_id'], $p['id']]);
 $sizeChart = $p['category_id'] ? fetch_one('SELECT * FROM size_charts WHERE category_id = ? AND is_active = 1 LIMIT 1', [$p['category_id']]) : null;
 if (!$sizeChart) { $sizeChart = fetch_one('SELECT * FROM size_charts WHERE is_active = 1 ORDER BY id LIMIT 1'); }
 

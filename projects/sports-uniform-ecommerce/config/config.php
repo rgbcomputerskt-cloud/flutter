@@ -6,6 +6,16 @@
  */
 
 // ---- Database ----
+// DB_DRIVER: 'sqlite' = zero-setup, no server needed (default, great for testing
+//            and for hosts without MySQL). The database file is created and seeded
+//            automatically on first run.
+//            'mysql'  = use a MySQL/MariaDB server (set the credentials below).
+define('DB_DRIVER', getenv('DB_DRIVER') ?: 'sqlite');
+
+// SQLite: where to keep the database file (must be writable by the web server)
+define('DB_SQLITE_PATH', getenv('DB_SQLITE_PATH') ?: dirname(__DIR__) . '/database/vantage.sqlite');
+
+// MySQL (only used when DB_DRIVER = 'mysql')
 define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
 define('DB_NAME', getenv('DB_NAME') ?: 'vantage_shop');
 define('DB_USER', getenv('DB_USER') ?: 'root');

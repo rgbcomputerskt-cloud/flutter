@@ -5,6 +5,9 @@ assets/uploads/*
 # local overrides
 config/config.local.php
 
+# auto-generated SQLite database (recreated on first run)
+database/vantage.sqlite
+
 # OS / editor
 .DS_Store
 Thumbs.db

@@ -40,9 +40,17 @@ function get_setting(string $key, $default = '')
 
 function set_setting(string $key, $value): void
 {
-    q('INSERT INTO settings (skey, svalue) VALUES (?, ?)
-       ON DUPLICATE KEY UPDATE svalue = VALUES(svalue)', [$key, $value]);
+    if (db_driver() === 'sqlite') {
+        q('INSERT INTO settings (skey, svalue) VALUES (?, ?)
+           ON CONFLICT(skey) DO UPDATE SET svalue = excluded.svalue', [$key, $value]);
+    } else {
+        q('INSERT INTO settings (skey, svalue) VALUES (?, ?)
+           ON DUPLICATE KEY UPDATE svalue = VALUES(svalue)', [$key, $value]);
+    }
 }
+
+/** Portable random-order SQL function name. */
+function sql_rand(): string { return db_driver() === 'sqlite' ? 'RANDOM()' : 'RAND()'; }
 
 /* ---------------------------------------------------------
  *  Slugs

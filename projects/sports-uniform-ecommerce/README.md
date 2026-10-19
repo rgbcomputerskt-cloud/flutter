@@ -7,6 +7,29 @@ inquiry list and request a custom quote.
 
 No frameworks, no Composer — plain PHP (PDO), ready to drop onto any PHP 7.4+ / 8.x host.
 
+> **Two database modes, same codebase:**
+> - **SQLite (default) — zero setup.** No database server needed. The database file is
+>   created and seeded automatically on first page load. Perfect for testing online and
+>   for free hosts without MySQL.
+> - **MySQL** — for production. Flip one setting and import the SQL file.
+
+---
+
+## ⚡ Fastest way to run (SQLite — zero setup)
+
+You only need PHP (7.4+). **No MySQL, no import, nothing to configure.**
+
+```bash
+cd sports-uniform-ecommerce
+php -S localhost:8000
+```
+Open **http://localhost:8000/** — the store is live and the database seeds itself on the
+first visit. CMS at **http://localhost:8000/admin** (`admin` / `admin123`).
+
+To host it online, just upload the folder to **any PHP host** and make sure the
+`database/` folder is writable. That's it. (Requires the `pdo_sqlite` PHP extension,
+which is enabled by default almost everywhere.)
+
 ---
 
 ## ✨ Features
@@ -55,17 +78,21 @@ XAMPP:   C:/xampp/htdocs/sports-uniform-ecommerce
 Laragon: C:/laragon/www/sports-uniform-ecommerce
 ```
 
-### 3. Create the database
+> **Prefer MySQL?** Set `define('DB_DRIVER', 'mysql');` in `config/config.php`, then
+> follow steps 3–4 below. Otherwise skip them — SQLite needs no setup.
+
+### 3. Create the database (MySQL mode only)
 Import `database/schema.sql` — it creates the `vantage_shop` database, all tables and demo data.
 ```bash
 mysql -u root -p < database/schema.sql
 ```
 Or use **phpMyAdmin → Import → choose `database/schema.sql`**.
 
-### 4. Configure the connection
+### 4. Configure the connection (MySQL mode only)
 Edit `config/config.php` if your MySQL credentials differ from the defaults
 (`host 127.0.0.1`, `db vantage_shop`, `user root`, empty password):
 ```php
+define('DB_DRIVER', 'mysql');
 define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'vantage_shop');
 define('DB_USER', 'root');
